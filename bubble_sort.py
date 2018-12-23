@@ -1,57 +1,48 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
 import random
-import time
-tup1 = (6,9,4,2,5,1,3,8)
+import datetime
+
 flag = 1 #初始化排序标志，1 标识可能需要继续下一轮排序 0 标识不需要
 count = 0
-#print("tup1[0]: ",tup1[0])
 
 def random_list(start,stop,length):
-    if length>=0:
+    if length >= 0:
         length=int(length)
         start, stop = (int(start), int(stop)) if start <= stop else (int(stop), int(start))
         r_list = []
         print("正在构造随机数组，数组长度：",length)
-        s_time = time.time()
+        s_time = datetime.datetime.now()
         for i in range(length):
             r_list.append(random.randint(start, stop))
-        print("数组构造完成，耗时：",time.time() - s_time,"s")
+        print("数组构造完成，耗时：",(datetime.datetime.now() - s_time).microseconds,"ms")
         return r_list
 
-
+def Bubble_Sort(alist):
+    count = 0 # 初始化排序轮数
+    flag = 1 # 初始化排序标志，1 表示可能需要下一轮排序 0 表示不需要
+    for j in range(len(alist)):
+        if flag != 0:
+            flag = 0 # 每一轮排序开始之前，将排序标志重置为0
+            # 计数
+            count += 1
+            for i in range(len(alist)-1):
+                if alist[i] > alist[i+1]:
+                    alist[i],alist[i+1] = alist[i+1],alist[i]
+                    flag = 1
+        else:
+            break
+    return count-1
 
 
 if __name__=="__main__":
-    list1 = random_list(1, 1000, 500)
-    # print(list1)
-    start_time = time.time()
-    for j in range(len(list1)-1):
-        # 根据上一趟的排序结果判断是否有必要进行下一趟排序
-        if flag != 0 :
-            # 开始计数
-            count = count + 1
-            # 每趟开始前，将排序标志重置为0
-            flag = 0
-            for i in range(len(list1)-1):
-                if list1[i] > list1[i+1]:
-                    list1[i],list1[i+1] = list1[i+1],list1[i]
-                    flag = 1 #标识可能需要进行下一趟排序
-                else:
-                    # print("do nothing")
-                    continue
-        else:
-            break
-
-    # for i in list1:
-    #     print(i)
-
-    end_time = time.time()
-
-    # print(list1)
-    #print("total numbers: ",len(list1))
-    #print("sort times: ",count-1)
-    print("time elapsed: ",end_time - start_time,"s")
+    list1 = random_list(1, 100, 50)
+    print("排序前：",list1)
+    start_time = datetime.datetime.now()
+    Sort_Count = Bubble_Sort(list1)
+    print("排序后：",list1)
+    print("排序次数：",Sort_Count)
+    print("耗时：",(datetime.datetime.now() - start_time).microseconds,"ms")
 
 
 
