@@ -3,9 +3,6 @@
 import random
 import datetime
 
-flag = 1 #初始化排序标志，1 标识可能需要继续下一轮排序 0 标识不需要
-count = 0
-
 def random_list(start,stop,length):
     if length >= 0:
         length=int(length)
@@ -15,7 +12,7 @@ def random_list(start,stop,length):
         s_time = datetime.datetime.now()
         for i in range(length):
             r_list.append(random.randint(start, stop))
-        print("数组构造完成，耗时：",(datetime.datetime.now() - s_time).microseconds,"ms")
+        print("数组构造完成，耗时：",(datetime.datetime.now() - s_time).microseconds/1000,"ms")
         return r_list
 
 def Bubble_Sort(alist):
@@ -36,13 +33,10 @@ def Bubble_Sort(alist):
 
 
 if __name__=="__main__":
-    list1 = random_list(1, 100, 50)
+    list1 = random_list(1, 2000, 1000)
     print("排序前：",list1)
     start_time = datetime.datetime.now()
     Sort_Count = Bubble_Sort(list1)
     print("排序后：",list1)
     print("排序次数：",Sort_Count)
-    print("耗时：",(datetime.datetime.now() - start_time).microseconds,"ms")
-
-
-
+    print("耗时：",(datetime.datetime.now() - start_time).microseconds/1000,"ms")

@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: UTF-8 -*-
-import time
+import datetime
 import random
 
 tup1 = (6,9,4,2,5,1,3,8)
@@ -14,15 +14,15 @@ count = 0
 
 
 def random_list(start,stop,length):
-    if length>=0:
+    if length >= 0:
         length=int(length)
         start, stop = (int(start), int(stop)) if start <= stop else (int(stop), int(start))
         r_list = []
         print("正在构造随机数组，数组长度：",length)
-        s_time = time.time()
+        s_time = datetime.datetime.now()
         for i in range(length):
             r_list.append(random.randint(start, stop))
-        print("数组构造完成，耗时：",time.time() - s_time,"s")
+        print("数组构造完成，耗时：",(datetime.datetime.now() - s_time).microseconds/1000,"ms")
         return r_list
 
 
@@ -61,38 +61,17 @@ def QuickSort(alist, start, end):
         alist.insert(l_index,pivot)
     print("---3: ",alist)
 
-
-    # # 控制right -= 1不满足条件交换
-    # while left < right:
-    #     while left < right and alist[right] > pivot:
-    #         right -= 1
-    #     else:
-    #         # 交换
-    #         alist[left] = alist[right]
-    #     # 控制 left += 1 , 不满足条件交换
-    #     while left < right and alist[left] < pivot:
-    #         left += 1
-    #     else:
-    #         alist[right] = alist[left]
-    #
-    # # 退出循环 left = right
-    # # left 或者 right 对应的位置 赋值为基准值
-    # alist[left] = pivot
-
     # 递归自己调用自己
     QuickSort(alist, start, l_index - 2)  # 对左边排序
     QuickSort(alist, l_index, end)  # 对右边排序
 
 def QuickSort2(list,start,end):
 
-    # print(list)
-
     if start >= end:
         return
 
     #随机基准值
     pivot_index = random.randint(start, end)
-    # print("pivot_index: ",pivot_index)
     pivot = list[pivot_index]
     l_index = start
     end_index = end
@@ -113,26 +92,17 @@ def QuickSort2(list,start,end):
 
     # 以上循环完成后，生成两段list，以pivot_index为分界点
     # 递归对这两段list做排序
-    # print("QuickSort2(list,", start, ",", pivot_index - 1, ")")
-    # print("QuickSort2(list,", pivot_index + 1, ",", end, ")")
     QuickSort2(list,start,pivot_index-1)
     QuickSort2(list,pivot_index+1,end)
 
 
 if __name__=="__main__":
-    list1 = random_list(1, 100, 10)
-    #list1 = [95,55, 34, 57]
-    # print(list1)
-    start_time = time.time()
-    # QuickSort2(list1,0,len(list1)-1)
-    QuickSort(list1,0,len(list1)-1)
-
-    print(list1)
-
-    end_time = time.time()
-    #print("total numbers: ",len(list1))
-    #print("sort times: ",count-1)
-    print("time elapsed: ",end_time - start_time,"s")
+    list1 = random_list(1, 2000, 1000)
+    print("排序前：", list1)
+    start_time = datetime.datetime.now()
+    QuickSort2(list1,0,len(list1)-1)
+    print("排序后：", list1)
+    print("耗时：", (datetime.datetime.now() - start_time).microseconds / 1000, "ms")
 
 
 
