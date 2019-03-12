@@ -69,7 +69,20 @@ def QuickSort2(list,start,end):
     QuickSort2(list,start,pivot_index-1)
     QuickSort2(list,pivot_index+1,end)
 
-
+# 百度百科上看到的一个方法，这个方法没有直接在原列表上排序，而是返回一个排好序的新列表，需要占用额外的空间
+def QuickSort3(list):
+    if len(list) >= 2:
+        mid = list[len(list)//2] # choose pivot
+        left,right = [],[]
+        list.remove(mid)
+        for num in list:
+            if num >= mid:
+                right.append(num)
+            else:
+                left.append(num)
+        return QuickSort3(left)+[mid]+QuickSort3(right)
+    else:
+        return list
 
 # 验证一个数组是否有序
 def check(list):
@@ -81,13 +94,14 @@ def check(list):
     return '验证成功'
 
 if __name__=="__main__":
-    list1 = random_list(1, 1000000, 100000)
-    # print("排序前：", list1)
+    list1 = random_list(1, 10000000, 1000000)
+    #print("排序前：", list1)
     start_time = time.time()
-    QuickSort(list1,0,len(list1)-1)
-    # print("排序后：", list1)
+    # QuickSort(list1,0,len(list1)-1)
+    list2 = QuickSort3(list1)
+    #print("排序后：", list2)
     print("耗时：",round(time.time()-start_time,3),"s")
-    print("结果：",check(list1))
+    print("结果：",check(list2))
 
 
 
